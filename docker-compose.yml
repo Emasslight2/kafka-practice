@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+    zookeeper:
+        image: 'bitnami/zookeeper:latest'
+        hostname: zookeeper
+        container_name: zookeeper
+        environment:
+            - ALLOW_ANONYMOUS_LOGIN=yes
+    kafka:
+        image: 'bitnami/kafka:latest'
+        hostname: kafka
+        container_name: kafka
+        env_file: 
+            - kafka.env
+        depends_on:
+            - zookeeper
+        # volumes:
+        # - ./data/kafka:/bitnami/kafka
+    producer-service:
+        restart: always
+        build: ./producer
+        container_name: producer-service
+        env_file:
+            - producer.env
+        ports:
+            - "5000:5000"
+        depends_on:
+            - zookeeper
+            - kafka
+    postgres:
+        image: postgres
+        container_name: postgres
+        env_file: 
+            - postgres.env
+        ports:
+            - "5432:5432"
+    consumer-service:
+        restart: always
+        build: ./consumer
+        container_name: consumer-service
+        env_file:
+            - consumer.env
+        ports:
+            - "5001:5001"
+        depends_on:
+            - zookeeper
+            - kafka
+            - postgres
