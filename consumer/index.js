@@ -33,7 +33,6 @@ typeorm.createConnection({
         consumer.subscribe(['post']);
         consumer.consume();
     }).on('data', (dataBuffer) => {
-        console.log("DATA:", dataBuffer);
         console.log("MESSAGE:", dataBuffer.value.toString());
         const { type, data }= JSON.parse(dataBuffer.value);
 
