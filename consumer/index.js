@@ -31,7 +31,10 @@ typeorm.createConnection({
 
     consumer.on('ready', () => {
         consumer.subscribe(['post']);
-        consumer.consume();
+        // Read one message every 1000 milliseconds
+        setInterval(function() {
+            consumer.consume(1);
+        }, 1000);
     }).on('data', (dataBuffer) => {
         console.log("MESSAGE:", dataBuffer.value.toString());
         const { type, data }= JSON.parse(dataBuffer.value);

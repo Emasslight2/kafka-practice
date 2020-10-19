@@ -25,10 +25,14 @@ producer.on('ready', () => {
         });
     });
 
-    app.post('/create', (req, res, next) => {
+    app.post('/create/:counter', (req, res, next) => {
         try {
-            console.log(req.body)
-            producer.produce('post', null, Buffer.from(JSON.stringify({type: "CREATE_POST", data: req.body})));
+            const counter = parseInt(req.params.counter);
+            console.log(req.body);
+            for(let i = 0; i < counter; i++) {
+                producer.produce('post', null, Buffer.from(JSON.stringify({type: "CREATE_POST", data: req.body, counter: i})));
+            }
+           
 
             return res.status(200).json({
                 message: "Your message is queued successfully"
