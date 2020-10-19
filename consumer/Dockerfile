@@ -15,5 +15,4 @@ RUN npm install
 # Bundle app source
 COPY . /src/consumer
 
-EXPOSE 5000
-CMD [ "node" , "index.js" ]
+EXPOSE 5001

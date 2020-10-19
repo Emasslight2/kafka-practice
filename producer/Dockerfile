@@ -16,4 +16,3 @@ RUN npm install
 COPY . /src/producer
 
 EXPOSE 5000
-CMD [ "node" , "index.js" ]

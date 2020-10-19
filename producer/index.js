@@ -31,9 +31,8 @@ producer.on('ready', () => {
             console.log(req.body);
             for(let i = 0; i < counter; i++) {
                 producer.produce('post', null, Buffer.from(JSON.stringify({type: "CREATE_POST", data: req.body, counter: i})));
+                console.log("IM WOKRING")
             }
-           
-
             return res.status(200).json({
                 message: "Your message is queued successfully"
             });

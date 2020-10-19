@@ -22,6 +22,10 @@ services:
     producer-service:
         restart: always
         build: ./producer
+        command: npm run dev
+        volumes:
+            - ./producer:/src/producer
+            - /src/producer/node_modules
         container_name: producer-service
         env_file:
             - producer.env
@@ -40,6 +44,10 @@ services:
     consumer-service:
         restart: always
         build: ./consumer
+        command: npm run dev
+        volumes:
+            - ./consumer:/src/consumer
+            - /src/consumer/node_modules
         container_name: consumer-service
         env_file:
             - consumer.env
